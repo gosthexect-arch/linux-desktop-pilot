@@ -10,7 +10,7 @@
 </p>
 
 <p align="center"><b>Computer Use for Codex on Linux. Screenshots, mouse, keyboard, and a plan that adapts.</b></p>
-<p align="center"><a href="#install-for-codex">Install</a> · <a href="#try-a-real-task">Examples</a> · <a href="#what-is-verified">Compatibility</a> · <a href="CONTRIBUTING.md">Contribute</a> · <a href="README.pt-BR.md">Português brasileiro</a></p>
+<p align="center"><a href="#install-for-codex">Install</a> · <a href="#try-a-real-task">Examples</a> · <a href="#what-is-verified">Compatibility</a> · <a href="CONTRIBUTING.md">Contribute</a> · <a href="README.pt-BR.md">Português (Brasil)</a></p>
 
 ## Give your agent a desktop workflow
 
