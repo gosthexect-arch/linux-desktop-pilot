@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teste visual Linux — dados sintéticos</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;background:#edf2f7;color:#17283c;font:18px system-ui,sans-serif}
+header{background:#152e4b;color:white;padding:20px 32px}h1{font-size:27px;margin:0 0 8px}header p{margin:0;color:#c5d6e8}
+nav{position:sticky;top:0;background:white;padding:14px 32px;display:flex;gap:26px;border-bottom:1px solid #a6b9cf;z-index:3}a{color:#164c9b;font-weight:650}
+main{max-width:1000px;padding:24px 32px;margin:auto}section{scroll-margin-top:70px;background:white;border:1px solid #becdde;border-radius:10px;padding:24px;margin-bottom:26px}
+h2{font-size:24px;margin:0 0 12px}p{line-height:1.45}label{display:block;margin:12px 0 6px;font-weight:600}
+input,select,textarea,button{font:inherit;padding:11px;border:1px solid #869db8;border-radius:6px}input,select,textarea{width:100%;max-width:650px;background:white}textarea{height:135px;display:block}
+button{cursor:pointer;background:#195ba3;color:white;border:0;margin:16px 14px 8px 0}button:focus-visible,a:focus-visible{outline:4px solid #e6a421;outline-offset:3px}
+output,.result{display:block;background:#e9f4e8;border-left:5px solid #34894c;padding:12px;margin:10px 0;min-height:48px;white-space:pre-wrap;overflow-wrap:anywhere}
+.note{font-size:15px;color:#4c6076}.two{display:flex;gap:24px}.two>div{flex:1}
+#canvas{height:260px;position:relative;background:#dae8f9;border:2px solid #7495b8;touch-action:none;overflow:hidden;user-select:none}
+#tile{position:absolute;left:65px;top:70px;width:100px;height:90px;background:#d05a34;color:white;border-radius:8px;display:grid;place-items:center;font-weight:700;pointer-events:none}
+#scrollbox{overflow:auto;width:100%;height:170px;border:2px solid #7495b8}#scrollcontent{width:1600px;height:500px;background:repeating-linear-gradient(45deg,#e7f0fc,#e7f0fc 70px,#c9ddf4 70px,#c9ddf4 140px);padding:30px}
+footer{padding:20px;text-align:center;color:#4c6076}
+</style>
+<header><h1>Teste visual de aplicativos Linux</h1><p>Ambiente local • dados sintéticos • nenhuma mensagem é enviada</p></header>
+<nav aria-label="Seções"><a href="#formulario">Formulário</a><a href="#conversa">Rascunho</a><a href="#gestos">Gestos</a><a href="#rolagem">Rolagem</a></nav>
+<main>
+<section id="formulario"><h2>1. Cadastro de teste</h2><p>Preencha e corrija os campos pela interface.</p>
+<form id="form"><label for="nome">Nome</label><input id="nome" autocomplete="off" placeholder="Nome de teste">
+<label for="equipe">Equipe</label><select id="equipe"><option>Atendimento</option><option>Criação</option><option>Operações</option></select>
+<button type="submit">Salvar cadastro local</button><output id="formresult" aria-live="polite">Nenhum cadastro salvo.</output></form></section>
+<section id="conversa"><h2>2. Rascunho de conversa</h2><p>Contato fictício: Equipe de Teste. Use várias linhas e confira o texto.</p>
+<label for="draft">Mensagem de teste</label><textarea id="draft" placeholder="Escreva seu rascunho aqui"></textarea>
+<button id="checkdraft">Conferir rascunho</button><output id="draftresult" aria-live="polite">Rascunho ainda não conferido.</output><p class="note">Este teste não acessa WhatsApp ou qualquer serviço externo.</p></section>
+<section id="gestos"><h2>3. Área gráfica e gestos</h2><p>Mova o bloco com o botão esquerdo ou central. Teste clique direito, duplo clique e Shift + arraste.</p>
+<div id="canvas" tabindex="0" role="application" aria-label="Área de teste de gestos"><div id="tile">Bloco</div></div>
+<output id="gestureresult" aria-live="polite">Aguardando gesto.</output></section>
+<section id="rolagem"><h2>4. Rolagem em dois eixos</h2><p>Role a área listrada para baixo e para a direita.</p>
+<div id="scrollbox" tabindex="0" aria-label="Painel de rolagem"><div id="scrollcontent">INÍCIO — conteúdo sintético com rolagem horizontal e vertical.<p style="margin:320px 0 0 950px">FINAL</p></div></div>
+<output id="scrollresult" aria-live="polite">Posição: horizontal 0, vertical 0.</output><a href="#formulario">Voltar ao formulário</a></section>
+</main><footer>Validação visual local — nenhuma integração de rede.</footer>
+<script>
+const byId=id=>document.getElementById(id);
+byId('form').addEventListener('submit',e=>{e.preventDefault();byId('formresult').textContent='Salvo localmente: '+byId('nome').value+' | Equipe: '+byId('equipe').value});
+byId('checkdraft').addEventListener('click',()=>{byId('draftresult').textContent='Rascunho conferido (não enviado):\n'+byId('draft').value});
+const canvas=byId('canvas'),tile=byId('tile'),feedback=byId('gestureresult');let gesture=null;
+canvas.addEventListener('pointerdown',e=>{e.preventDefault();canvas.focus();canvas.setPointerCapture(e.pointerId);gesture={x:e.clientX,y:e.clientY,left:tile.offsetLeft,top:tile.offsetTop,button:e.button,shift:e.shiftKey,moved:false};feedback.textContent='Botão pressionado: '+['esquerdo','central','direito'][e.button]+' | Shift: '+(e.shiftKey?'sim':'não')});
+canvas.addEventListener('pointermove',e=>{if(!gesture){feedback.textContent='Ponteiro sobre a área gráfica.';return}let dx=e.clientX-gesture.x,dy=e.clientY-gesture.y;if(Math.abs(dx)+Math.abs(dy)>3)gesture.moved=true;if(gesture.button!==2){tile.style.left=Math.max(0,Math.min(canvas.clientWidth-100,gesture.left+dx))+'px';tile.style.top=Math.max(0,Math.min(canvas.clientHeight-90,gesture.top+dy))+'px'}});
+canvas.addEventListener('pointerup',e=>{if(!gesture)return;feedback.textContent=(gesture.moved?'Arraste':'Clique')+' '+['esquerdo','central','direito'][gesture.button]+' concluído | Shift: '+(gesture.shift?'sim':'não')+' | Bloco: '+tile.offsetLeft+', '+tile.offsetTop;gesture=null});
+canvas.addEventListener('contextmenu',e=>e.preventDefault());canvas.addEventListener('dblclick',()=>feedback.textContent='Duplo clique reconhecido.');
+byId('scrollbox').addEventListener('scroll',e=>{byId('scrollresult').textContent='Posição: horizontal '+Math.round(e.target.scrollLeft)+', vertical '+Math.round(e.target.scrollTop)+'.'});
+</script>
+</html>

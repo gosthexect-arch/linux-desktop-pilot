@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.qa/
+dist/
+*.log
+.env
+.env.*
+!.env.example
+.venv/
+/VALIDATION.md

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Linux Desktop Pilot"
+  short_description: "Opere apps visualmente, com foco no Hyprland"
+  default_prompt: "Use $linux-visual-computer-use para realizar minha tarefa pela interface visível do aplicativo, adaptando a navegação quando necessário."

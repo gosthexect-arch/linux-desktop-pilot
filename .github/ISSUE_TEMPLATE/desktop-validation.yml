@@ -1,0 +1,30 @@
+name: Desktop or model validation
+description: Share a real test on your desktop, app or model/host
+title: "[Validation]: "
+body:
+  - type: textarea
+    id: setup
+    attributes:
+      label: Tested combination
+      description: Distribution, compositor/version, session type, scales, app, backend and model/host. Unknown values are fine.
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: Task and control path
+      description: What did the agent do, and through which GUI transport?
+    validations:
+      required: true
+  - type: textarea
+    id: results
+    attributes:
+      label: Observed results
+      description: Separate passed, failed, blocked and not-run cases. A doctor or unit test alone is not a GUI pass.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Relevant evidence
+      description: Redacted screenshots, observations or errors. Share only information related to the test.

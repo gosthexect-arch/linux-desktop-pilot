@@ -1,0 +1,25 @@
+name: Bug report
+description: Report a reproducible installation or desktop-control problem
+title: "[Bug]: "
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Distribution, compositor/version, Wayland or X11, Python, backend, app and host/model when known.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps and intended result
+      description: Use a small task with synthetic data where possible.
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened?
+      description: Include the exact error and relevant redacted evidence. Do not upload private conversations or credentials.
+    validations:
+      required: true
